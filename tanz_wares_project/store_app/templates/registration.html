@@ -1,0 +1,20 @@
+{% extends './base.html'%}
+{%block content%}
+<div class="container">
+    <h1>Welcome to Tanz's Wares</h1>
+    {% if messages %}
+    <ul class="messages">    
+        {% for message in messages %}    
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/register" method="POST">
+        {%csrf_token%}
+        {{form.as_p}}
+        <input type="submit" value="Register">
+    </form><br>
+</div>
+
+
+{%endblock%}

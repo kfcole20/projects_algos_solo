@@ -21,13 +21,11 @@ class UserValidation(models.Manager):
         errors={}
         if len(post['first_name']) <2 or len(post['last_name']) <2:
             errors['name']='Name length too short!'
-        if len(post['password'])==0:
-            errors['nan']='Password needed to continue!'
-        elif post['password'] != post['password_confirm']:
+        if post['password'] != post['password_confirm']:
             errors['password']='Passwords do not match!'
         if not email_ver.match(post['email']):
             errors['email']= 'Email format incorrect!'
-
+        return errors
 
 class User(models.Model):
     first_name= models.CharField(max_length=60)
