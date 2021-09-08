@@ -1,5 +1,6 @@
 from django.db import models
 import bcrypt, re
+from .forms import *
 
 # Create your models here.
 class UserValidation(models.Manager):
@@ -10,20 +11,21 @@ class UserValidation(models.Manager):
             errors['email']='Enter an email please!'
         elif len(user_logged)==0:
             errors['dne']='No user with that email'
-        if len(post['password']) == 0:
-            errors['password']='Password needed to continue!'
-        elif not bcrypt.checkpw(post['password'].encode(), user_logged[0].password.encode()):
+        if len(post['pw']) == 0:
+            errors['pw']='Password needed to continue!'
+        elif not bcrypt.checkpw(post['pw'].encode(), user_logged[0].pw.encode()):
             errors['incorrect']='Password/Email combination incorrect'
         return errors
         
     def register(self, post):
+        registration_form=RegistrationForm(post)
         email_ver= re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
         errors={}
-        if len(post['first_name']) <2 or len(post['last_name']) <2:
+        if len(registration_form.data['first_name']) <2 or len(registration_form.data['last_name']) <2:
             errors['name']='Name length too short!'
-        if post['password'] != post['password_confirm']:
-            errors['password']='Passwords do not match!'
-        if not email_ver.match(post['email']):
+        if registration_form.data['pw'] != registration_form.data['pw_c']:
+            errors['pw']='Passwords do not match!'
+        if not email_ver.match(registration_form.data['email']):
             errors['email']= 'Email format incorrect!'
         return errors
 
@@ -31,7 +33,13 @@ class User(models.Model):
     first_name= models.CharField(max_length=60)
     last_name= models.CharField(max_length=60)
     email=models.CharField(max_length=60)
-    password= models.CharField(max_length=20)
+    pw= models.CharField(max_length=20)
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     objects= UserValidation()
+
+class Item(models.Model):
+    name= models.CharField(max_length=25)
+    price= models.FloatField()
+    desc=models.TextField()
+    img=models.ImageField()
