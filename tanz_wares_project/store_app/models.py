@@ -38,8 +38,14 @@ class User(models.Model):
     updated_at=models.DateTimeField(auto_now=True)
     objects= UserValidation()
 
+    def __str__(self):
+        return self.first_name
+
 class Item(models.Model):
     name= models.CharField(max_length=25)
     price= models.FloatField()
     desc=models.TextField()
-    img=models.ImageField()
+    image=models.ImageField(default='default.jpg', upload_to='item_images')
+
+    def __str__(self):
+        return self.name

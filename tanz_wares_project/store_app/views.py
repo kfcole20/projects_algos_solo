@@ -2,7 +2,7 @@ from django.forms import forms
 from django.shortcuts import render, redirect
 from django import forms
 from .forms import RegistrationForm, LoginForm
-from .models import User
+from .models import User, Item
 import bcrypt
 from django.contrib import messages
 
@@ -54,7 +54,8 @@ def verify(request):
         
 def home(request):
     context={
-        'user': User.objects.get(id=request.session['id'])
+        'user': User.objects.get(id=request.session['id']),
+        'items':Item.objects.all()
     }
     return render(request, 'home.html', context)
 

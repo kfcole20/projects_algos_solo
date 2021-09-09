@@ -1,5 +1,2 @@
 To do list today:
--Done********Set up Users with login and registration validations
--Done *****Create login and registration with Forms
--Done******Set up nav bar to appear on all pages with specifics
--DONE*****Set up Shop Homepage
+-Set up item model with name, descritpion, price, and imagefield
