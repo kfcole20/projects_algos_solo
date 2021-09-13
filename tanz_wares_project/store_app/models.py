@@ -1,5 +1,7 @@
 from django.db import models
 import bcrypt, re
+
+from django.db.models.deletion import CASCADE
 from .forms import *
 
 # Create your models here.
@@ -46,6 +48,7 @@ class Item(models.Model):
     price= models.FloatField()
     desc=models.TextField()
     image=models.ImageField(default='default.jpg', upload_to='item_images')
+    fav_by=models.ManyToManyField(User, related_name='fav_item')
 
     def __str__(self):
         return self.name

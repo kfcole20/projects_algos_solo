@@ -10,3 +10,4 @@ class RegistrationForm(forms.Form):
 class LoginForm(forms.Form):
     email=forms.CharField(max_length=60)
     pw = forms.CharField(label="Password",widget=forms.PasswordInput())
+

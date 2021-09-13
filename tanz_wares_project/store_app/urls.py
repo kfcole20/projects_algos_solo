@@ -7,5 +7,7 @@ urlpatterns=[
     path('register', views.register),
     path('verify', views.verify),
     path('home', views.home),
-    path('logout', views.logout)
+    path('logout', views.logout),
+    path('add_favorite/<int:item_id>', views.add_favorite),
+    path('remove_favorite/<int:item_id>', views.remove_favorite)
 ]

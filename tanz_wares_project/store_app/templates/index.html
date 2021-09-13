@@ -9,11 +9,13 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form action="/verify" method="post">
-        {%csrf_token%}
-        {{login_form.as_p}}
-        <input type="submit" value="Login">
-    </form><br>
+    <div class="login_form" style="text-align: center; width: 60%; align-items: center;">
+        <form action="/verify" method="post" style="  text-align: right; margin-top: 60px;">
+            {%csrf_token%}
+            {{login_form.as_p}}
+            <input type="submit" value="Login">
+        </form><br>
+    </div>
     <h6>New User?<a href="/registration">Click Here!</a></h6>
 </div>
 {%endblock%}

@@ -3,10 +3,3 @@
     text-align: center;
     margin-top: 20px;
 }
-
-.items_container{
-    display: flex;
-}
-.items_box img{
-    border-radius: 30px;
-}

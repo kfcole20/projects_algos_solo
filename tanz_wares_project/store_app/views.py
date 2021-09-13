@@ -55,10 +55,23 @@ def verify(request):
 def home(request):
     context={
         'user': User.objects.get(id=request.session['id']),
-        'items':Item.objects.all()
+        'items':Item.objects.all(),
+        
     }
     return render(request, 'home.html', context)
 
 def logout(request):
     request.session.clear()
     return redirect('/')
+
+def add_favorite(request, item_id):
+    this_item=Item.objects.get(id=item_id)
+    user=User.objects.get(id=request.session['id'])
+    this_item.fav_by.add(user)
+    return redirect('/home')
+
+def remove_favorite(request, item_id):
+    this_item=Item.objects.get(id=item_id)
+    user=User.objects.get(id=request.session['id'])
+    this_item.fav_by.remove(user)
+    return redirect('/home')

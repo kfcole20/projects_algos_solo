@@ -1,2 +1,2 @@
 To do list today:
--Set up item model with name, descritpion, price, and imagefield
+-Set max length of a line when adding things to 5 and then new line is started
