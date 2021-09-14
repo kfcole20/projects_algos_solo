@@ -12,7 +12,11 @@
     </head>
     <body style="background-color: beige;">
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: crimson; padding-left: 15px;">
-            <a class="navbar-brand" href="#">TanzWares</a>
+            {%if user.id == request.session.id%}
+            <a class="navbar-brand" href="/home">TanzWares</a>
+            {%elif user not in request.session%}
+            <a class="navbar-brand" href="/">TanzWares</a>
+            {%endif%}
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
