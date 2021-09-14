@@ -1,7 +1,8 @@
+from typing import ContextManager
 from django.forms import forms
 from django.shortcuts import render, redirect
 from django import forms
-from .forms import RegistrationForm, LoginForm
+from .forms import CheckoutForm, RegistrationForm, LoginForm
 from .models import User, Item
 import bcrypt
 from django.contrib import messages
@@ -74,4 +75,56 @@ def remove_favorite(request, item_id):
     this_item=Item.objects.get(id=item_id)
     user=User.objects.get(id=request.session['id'])
     this_item.fav_by.remove(user)
+    return redirect('/favorites_view')
+
+def fav_view(request):
+    user=User.objects.get(id=request.session['id'])
+    context={
+        'items':user.fav_item.all(),
+        'user':user
+    }
+    return render(request, 'favorites.html', context)
+
+def cart_view(request):
+    user=User.objects.get(id=request.session['id'])
+    items= user.cart_item.all()
+    total=0
+    for item in items:
+        total+=item.price
+    context={
+        'items':items,
+        'total':total
+    }
+    request.session['total']=total
+    return render(request, 'cart.html', context)
+
+def add_cart(request, item_id):
+    this_item=Item.objects.get(id=item_id)
+    user=User.objects.get(id=request.session['id'])
+    this_item.added_item.add(user)
     return redirect('/home')
+
+def remove_cart(request, item_id):
+    this_item=Item.objects.get(id=item_id)
+    user=User.objects.get(id=request.session['id'])
+    this_item.added_item.remove(user)
+    return redirect('/cart_view')
+
+def checkout(request):
+    checkoutForm=CheckoutForm()
+    user=User.objects.get(id=request.session['id'])
+    items= user.cart_item.all()
+    context={
+        'checkoutForm':checkoutForm,
+        'total':request.session['total'],
+        'items':items
+    }
+    return render(request, 'checkout.html', context)
+
+def verify_card(request):
+    user=User.objects.get(id=request.session['id'])
+    user.cart_item.clear()
+    return redirect('/success')
+
+def success(request):
+    return render(request, 'success.html')

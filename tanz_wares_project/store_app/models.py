@@ -49,6 +49,7 @@ class Item(models.Model):
     desc=models.TextField()
     image=models.ImageField(default='default.jpg', upload_to='item_images')
     fav_by=models.ManyToManyField(User, related_name='fav_item')
+    added_item=models.ManyToManyField(User, related_name='cart_item')
 
     def __str__(self):
         return self.name

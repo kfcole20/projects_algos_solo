@@ -1,6 +1,6 @@
 {% extends './base.html'%}
 {%block content%}
-<div class="container">
+<div class="container" style="font-family: sans-serif;">
     <h1>Welcome to Tanz's Wares</h1>
     {% if messages %}
     <ul class="messages">    
@@ -9,11 +9,13 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form action="/register" method="POST">
-        {%csrf_token%}
-        {{registration_form.as_p}}
-        <input type="submit" value="Register">
-    </form><br>
+    <div class="registerform" style="text-align: center; width: 60%; align-items: center;">
+        <form action="/register" method="POST" style="text-align: right; margin-top: 60px;">
+            {%csrf_token%}
+            {{registration_form.as_p}}
+            <input type="submit" value="Register">
+        </form><br>
+    </div>
 </div>
 
 

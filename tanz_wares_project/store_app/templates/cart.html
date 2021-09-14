@@ -1,26 +1,32 @@
 {% extends './base.html' %}
 {%block content%}
 <div class="container" style="font-family: sans-serif;">
-    <h1>Favorites for Later</h1>
+    <h1>Cart View</h1>
     <hr>
     <div class="items_container" style="display: block;">
         {%if not items%}
-            <h2>You have no favorites yet!</h2>
+            <h2>Your Cart Is Empty!</h2>
         {%endif%}
+        <h4 style="text-align: right;">Total: ${{total}}</h4>
+        <h4 style="text-align: right;"><a href="/checkout"><button type="button" class="btn btn-success">Checkout</button></a></h4>
         {%for item in items%}
         <div class="items_box" style="border: 1px crimson solid; padding: 15px; margin-right: 25px; border-radius: 30px; background-color: whitesmoke; text-align: center;">
             <img src="{{item.image.url}}" width="200px" style="border-radius: 30px; ">
             <h3>{{item.name}}</h3>
             <p>${{item.price}} <br>{{item.desc}}</p>
             <p style="text-align: center;">
+                <a href="/remove_cart/{{item.id}}">
+                    <button type="button" class="btn btn-outline-danger">Remove From Cart</button>
+                </a> <br> <br>
                 {%if user not in item.added_item.all%}
-                <a href="/add_cart/{{item.id}}">
-                    <button type="button" class="btn btn-outline-primary ">Add to Cart</button>
-                </a><br><br>
-                {%endif%}
+                <a href="/add_favorite/{{item.id}}">
+                    <button type="button" class="btn btn-outline-secondary">Save favorite</button>
+                </a>
+                {%elif user in item.added_item.all%}
                 <a href="/remove_favorite/{{item.id}}">
                     <button type="button" class="btn btn-outline-danger">Remove Favorite</button>
                 </a>
+                {%endif%}
             </p>
             <p style="text-align: center;">
                 
@@ -30,6 +36,13 @@
         <hr>
         {%endfor%}
     </div>
+
+
+
+
+
+
 </div>
+
 
 {%endblock%}

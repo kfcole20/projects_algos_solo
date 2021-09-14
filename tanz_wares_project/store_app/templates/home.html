@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 {%block content%}
-<div class="container">
+<div class="container" style="font-family: sans-serif;">
     <h5 style="text-align: left;">Hello, {{user.first_name}}!</h5>
     <h1>Welcome to Tanz's Wares</h1>
     <hr>
@@ -11,17 +11,15 @@
             <h3>{{item.name}}</h3>
             <p>${{item.price}} <br>{{item.desc}}</p>
             <p style="text-align: center;">
-                <a href="#">
-                    <input type="button" value="Add To Cart">
-                </a>|
+                {%if user not in item.added_item.all%}
+                <a href="/add_cart/{{item.id}}">
+                    <button type="button" class="btn btn-outline-primary ">Add to Cart</button>
+                </a><br> <br>
+                {%endif%}
+                
                 {%if user not in item.fav_by.all%}
                 <a href="/add_favorite/{{item.id}}">
-                    <input type="button" value="Save">
-                </a>
-                {%endif%}
-                {%if user in item.fav_by.all%}
-                <a href="/remove_favorite/{{item.id}}">
-                    <input type="button" value="Remove From Favorites">
+                    <button type="button" class="btn btn-outline-secondary">Save favorite</button>
                 </a>
                 {%endif%}
             </p>

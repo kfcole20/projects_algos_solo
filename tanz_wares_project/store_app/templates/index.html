@@ -1,6 +1,6 @@
 {% extends './base.html'%}
 {%block content%}
-<div class="container">
+<div class="container" style="font-family: sans-serif;">
     <h1>Welcome to Tanz's Wares</h1>
     {% if messages %}
     <ul class="messages">    
@@ -10,7 +10,7 @@
     </ul>
     {% endif %}
     <div class="login_form" style="text-align: center; width: 60%; align-items: center;">
-        <form action="/verify" method="post" style="  text-align: right; margin-top: 60px;">
+        <form action="/verify" method="post" style="text-align: right; margin-top: 60px;">
             {%csrf_token%}
             {{login_form.as_p}}
             <input type="submit" value="Login">
