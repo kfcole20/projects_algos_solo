@@ -7,16 +7,13 @@ from .forms import *
 # Create your models here.
 class UserValidation(models.Manager):
     def verify_login(self, post):
+        login_form= LoginForm(post)
         errors={}
-        user_logged= User.objects.filter(email=post['email'])
-        if len(post['email'])== 0:
-            errors['email']='Enter an email please!'
-        elif len(user_logged)==0:
-            errors['dne']='No user with that email'
-        if len(post['pw']) == 0:
-            errors['pw']='Password needed to continue!'
-        elif not bcrypt.checkpw(post['pw'].encode(), user_logged[0].pw.encode()):
-            errors['incorrect']='Password/Email combination incorrect'
+        user_logged= User.objects.filter(email=login_form.data['email'])
+        if len(user_logged)==0:
+            errors['email']='No user with that email'
+        if not bcrypt.checkpw(login_form.data['pw'].encode(), user_logged[0].pw.encode()):
+            errors['pw']='Password/Email combination incorrect'
         return errors
         
     def register(self, post):
